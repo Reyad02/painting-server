@@ -34,6 +34,15 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/crafts', async (req, res) => {
+      // const artsData = req.body;
+      // console.log(artsData);
+      const cursor = artCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+
 
 
     // Send a ping to confirm a successful connection
