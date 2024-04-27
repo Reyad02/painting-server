@@ -42,15 +42,33 @@ async function run() {
 
     app.get('/crafts/:id', async (req, res) => {
       const id = req.params.id;
-      const query = {_id: new ObjectId(id)}
+      const query = { _id: new ObjectId(id) }
       const result = await artCollection.findOne(query);
       res.send(result);
     })
 
-    app.delete('/crafts/:id', async (req, res) => {
+
+    app.put('/crafts/:id', async (req, res) => {
       const id = req.params.id;
-      const query = {_id: new ObjectId(id)}
-      const result = await artCollection.deleteOne(query);
+      const filter = { _id: new ObjectId(id) }
+      const options = { upsert: true };
+      const updateData = req.body;
+      const eachData = {
+        $set: {
+          photo: updateData.photo,
+          item_name: updateData.item_name,
+          subcategory_Name: updateData.subcategory_Name,
+          description: updateData.description,
+          Price: updateData.Price,
+          rating: updateData.rating,
+          customization: updateData.customization,
+          processing_time: updateData.processing_time,
+          stockStatus: updateData.stockStatus,
+          Email: updateData.Email,
+          Name: updateData.Name
+        }
+      }
+      const result = await artCollection.updateOne(filter, eachData, options);
       res.send(result);
     })
 
