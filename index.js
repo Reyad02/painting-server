@@ -26,6 +26,7 @@ async function run() {
 
     const database = client.db('art&craft');
     const artCollection = database.collection('arts&Crafts');
+    const categoryCollection = database.collection('subCategories');
 
     app.post('/crafts', async (req, res) => {
       const artsData = req.body;
@@ -72,6 +73,11 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/subCategory', async (req, res) => {
+      const cursor = categoryCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
 
 
 
