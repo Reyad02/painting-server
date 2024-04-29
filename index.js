@@ -79,6 +79,24 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/subCategory/:sub_category', async (req, res) => {
+      const sub_category = req.params.sub_category;
+      const query = { sub_category: sub_category }
+      const result = await categoryCollection.findOne(query)
+      res.send(result);
+    })
+
+    app.get('/crafts/sub_category/:sub_category', async (req, res) => {
+      const sub_category = req.params.sub_category;
+      console.log(sub_category);
+      console.log(typeof sub_category);
+      const query = { subcategory_Name: sub_category }
+      const cursor =  artCollection.find(query)
+      const result = await cursor.toArray()
+      console.log(result);
+      res.send(result);
+    })
+
 
 
     // Send a ping to confirm a successful connection
