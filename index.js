@@ -5,7 +5,9 @@ require('dotenv').config()
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5174',"http://localhost:5173", "http://localhost:5175", "https://artcraft-c8559.web.app", "https://artcraft-c8559.firebaseapp.com"]
+}));
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.SECRET_KEY}@cluster0.dr6rgwa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -22,7 +24,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server (optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const database = client.db('art&craft');
     const artCollection = database.collection('arts&Crafts');
@@ -50,7 +52,7 @@ async function run() {
     app.get('/crafts/email/:email', async (req, res) => {
       const email = req.params.email;
       const query = { Email: email }
-      const cursor =  artCollection.find(query);
+      const cursor = artCollection.find(query);
       const result = await cursor.toArray();
       res.send(result);
     })
@@ -103,7 +105,7 @@ async function run() {
     app.get('/crafts/sub_category/:sub_category', async (req, res) => {
       const sub_category = req.params.sub_category;
       const query = { subcategory_Name: sub_category }
-      const cursor =  artCollection.find(query)
+      const cursor = artCollection.find(query)
       const result = await cursor.toArray()
       res.send(result);
     })
@@ -111,7 +113,7 @@ async function run() {
 
 
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
 
