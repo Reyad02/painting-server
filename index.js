@@ -48,6 +48,15 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/crafts/email/:email', async (req, res) => {
+      const email = req.params.email;
+      console.log(email)
+      const query = { Email: email }
+      const cursor =  artCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
     app.delete('/crafts/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) }
