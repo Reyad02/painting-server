@@ -30,7 +30,6 @@ async function run() {
 
     app.post('/crafts', async (req, res) => {
       const artsData = req.body;
-      console.log(artsData);
       const result = await artCollection.insertOne(artsData);
       res.send(result);
     })
@@ -50,7 +49,6 @@ async function run() {
 
     app.get('/crafts/email/:email', async (req, res) => {
       const email = req.params.email;
-      console.log(email)
       const query = { Email: email }
       const cursor =  artCollection.find(query);
       const result = await cursor.toArray();
@@ -104,12 +102,9 @@ async function run() {
 
     app.get('/crafts/sub_category/:sub_category', async (req, res) => {
       const sub_category = req.params.sub_category;
-      console.log(sub_category);
-      console.log(typeof sub_category);
       const query = { subcategory_Name: sub_category }
       const cursor =  artCollection.find(query)
       const result = await cursor.toArray()
-      console.log(result);
       res.send(result);
     })
 
